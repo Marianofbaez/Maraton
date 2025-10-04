@@ -10,5 +10,5 @@ export class City {
   name: string;
 
   @OneToMany(() => Athlete, (a) => a.city)
-  athletes: Athlete[];
+  athlete: Athlete[];
 }

@@ -51,7 +51,7 @@ export class AthletesService {
   async update(id: number, dto: UpdateAthleteDto) {
     const athlete = await this.athletes.findOne({
       where: { id },
-      relations: ['cities'],
+      relations: ['city'],
     });
     if (!athlete) throw new NotFoundException('athlete not found'); // corta con 404 no existe
 
