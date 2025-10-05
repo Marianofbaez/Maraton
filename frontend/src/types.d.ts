@@ -6,7 +6,7 @@ export interface Athlete {
   name: string;
   time: string;
   position: number;
-  city: City;
+  city: City | string;
 }
 export interface AthleteInput {
   dni: number;

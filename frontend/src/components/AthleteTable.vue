@@ -30,7 +30,7 @@ watch(()=>props.cityId, v => { model.value = v ?? 0 })
         <td>{{ a.dni }}</td>
   <td>{{ a.time }}</td>
   <td>{{ a.position }}</td>
-  <td>{{ a.city?.name }}</td>
+  <td>{{ a.city }}</td>
         <td class="space-x-2">
           <button @click="$emit('edit', a.id)" class="border rounded-lg px-2 py-1">Editar</button>
           <button class="bg-red-600 text-white rounded-lg px-2 py-1" @click="$emit('remove', a.id)">Eliminar</button>

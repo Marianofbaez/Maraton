@@ -10,9 +10,9 @@ import { AthletesModule } from './athletes/athletes.module';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5433,
+      port: 5432,
       username: 'postgres',
-      password: 'Mariano1992',
+      password: 'clave',
       database: 'apiMarathon',
       autoLoadEntities: true,
       synchronize: true,

@@ -12,14 +12,23 @@ const dni = ref<number | null>(props.modelValue?.dni ?? null)
 const nameVal = ref(props.modelValue?.name ?? '')
 const timeVal = ref(props.modelValue?.time ?? '')
 const positionVal = ref<number | null>(props.modelValue?.position ?? null)
-const cityId = ref<number>(props.modelValue?.city?.id ?? 0)
+function resolveCityId(m?: any, cities: City[] = []) {
+  if(!m?.city) return 0
+  if(typeof m.city === 'string') {
+    const found = cities.find(c => c.name === m.city)
+    return found ? found.id : 0
+  }
+  return (m.city as any)?.id ?? 0
+}
+
+const cityId = ref<number>(resolveCityId(props.modelValue as any, props.cities))
 
 watch(()=>props.modelValue, (m)=>{
   dni.value = m?.dni ?? null
   nameVal.value = m?.name ?? ''
   timeVal.value = m?.time ?? ''
   positionVal.value = m?.position ?? null
-  cityId.value = m?.city?.id ?? 0
+  cityId.value = resolveCityId(m as any, props.cities)
 })
 
 const saving = ref(false)
