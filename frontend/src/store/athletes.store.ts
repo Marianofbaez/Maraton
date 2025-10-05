@@ -12,8 +12,8 @@ export const useAthletesStore = defineStore('athletes', {
   }),
   getters: {
     filtered(state) {
-      const rows = [...state.list].sort((a,b)=>a.posicion-b.posicion)
-      if (state.filterCityId) return rows.filter(a => a.ciudad?.id === state.filterCityId)
+      const rows = [...state.list].sort((a,b)=>a.position-b.position)
+      if (state.filterCityId) return rows.filter(a => a.city?.id === state.filterCityId)
       return rows
     }
   },

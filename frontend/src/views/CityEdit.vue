@@ -10,19 +10,19 @@ const id = computed(()=> Number(params.id))
 const isEdit = computed(()=> !!params.id)
 
 const { list, loading, error, fetchAll, create, update, byId } = useCities()
-const model = ref<{ nombre: string } | null>(null)
+const model = ref<{ name: string } | null>(null)
 
 onMounted(async () => {
   if(!list.value.length) await fetchAll()
   if(isEdit.value) {
     const c = byId(id.value)
-    if(c) model.value = { nombre: c.nombre }
+    if(c) model.value = { name: c.name }
   } else {
-    model.value = { nombre: '' }
+    model.value = { name: '' }
   }
 })
 
-async function onSubmit(payload:{ nombre:string }) {
+async function onSubmit(payload:{ name:string }) {
   if(isEdit.value) await update(id.value, payload)
   else await create(payload)
   goList()

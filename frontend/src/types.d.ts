@@ -1,17 +1,17 @@
 
-export interface City { id: number; nombre: string; }
+export interface City { id: number; name: string; }
 export interface Athlete {
   id: number;
   dni: number;
-  nombre: string;
-  tiempo: string;
-  posicion: number;
-  ciudad: City;
+  name: string;
+  time: string;
+  position: number;
+  city: City;
 }
 export interface AthleteInput {
   dni: number;
-  nombre: string;
-  tiempo: string;
-  posicion: number;
-  ciudadId: number;
+  name: string;
+  time: string;
+  position: number;
+  cityId: number;
 }

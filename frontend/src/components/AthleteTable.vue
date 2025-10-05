@@ -14,7 +14,7 @@ watch(()=>props.cityId, v => { model.value = v ?? 0 })
     <label class="mr-2">Filtrar por ciudad:</label>
     <select v-model.number="model" @change="$emit('change-city', model)" class="border rounded-lg px-3 py-2">
       <option :value="0">Todas</option>
-      <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.nombre }}</option>
+    <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
     </select>
   </div>
   <table class="w-full">
@@ -25,12 +25,12 @@ watch(()=>props.cityId, v => { model.value = v ?? 0 })
     </thead>
     <tbody>
       <tr v-for="a in athletes" :key="a.id" class="border-b hover:bg-gray-50">
-        <td><PodiumBadge :position="a.posicion" /></td>
-        <td>{{ a.nombre }}</td>
+  <td><PodiumBadge :position="a.position" /></td>
+  <td>{{ a.name }}</td>
         <td>{{ a.dni }}</td>
-        <td>{{ a.tiempo }}</td>
-        <td>{{ a.posicion }}</td>
-        <td>{{ a.ciudad?.nombre }}</td>
+  <td>{{ a.time }}</td>
+  <td>{{ a.position }}</td>
+  <td>{{ a.city?.name }}</td>
         <td class="space-x-2">
           <button @click="$emit('edit', a.id)" class="border rounded-lg px-2 py-1">Editar</button>
           <button class="bg-red-600 text-white rounded-lg px-2 py-1" @click="$emit('remove', a.id)">Eliminar</button>

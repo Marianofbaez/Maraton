@@ -9,17 +9,17 @@ const props = defineProps<{
 const emit = defineEmits<{ (e:'submit', v:AthleteInput): void; (e:'cancel'): void }>()
 
 const dni = ref<number | null>(props.modelValue?.dni ?? null)
-const nombre = ref(props.modelValue?.nombre ?? '')
-const tiempo = ref(props.modelValue?.tiempo ?? '')
-const posicion = ref<number | null>(props.modelValue?.posicion ?? null)
-const ciudadId = ref<number>(props.modelValue?.ciudad?.id ?? 0)
+const nameVal = ref(props.modelValue?.name ?? '')
+const timeVal = ref(props.modelValue?.time ?? '')
+const positionVal = ref<number | null>(props.modelValue?.position ?? null)
+const cityId = ref<number>(props.modelValue?.city?.id ?? 0)
 
 watch(()=>props.modelValue, (m)=>{
   dni.value = m?.dni ?? null
-  nombre.value = m?.nombre ?? ''
-  tiempo.value = m?.tiempo ?? ''
-  posicion.value = m?.posicion ?? null
-  ciudadId.value = m?.ciudad?.id ?? 0
+  nameVal.value = m?.name ?? ''
+  timeVal.value = m?.time ?? ''
+  positionVal.value = m?.position ?? null
+  cityId.value = m?.city?.id ?? 0
 })
 
 const saving = ref(false)
@@ -29,10 +29,10 @@ const timeRegex = /^\d+h \d{2}m \d{2}s$/
 const isValid = computed(() => {
   errs.value = []
   if(!dni.value || isNaN(dni.value)) errs.value.push('DNI inválido')
-  if(!nombre.value) errs.value.push('Nombre es obligatorio')
-  if(!tiempo.value || !timeRegex.test(tiempo.value)) errs.value.push('Tiempo con formato "2h 07m 30s"')
-  if(!posicion.value || posicion.value <= 0) errs.value.push('Posición debe ser > 0')
-  if(!ciudadId.value) errs.value.push('Debe seleccionar ciudad')
+  if(!nameVal.value) errs.value.push('Nombre es obligatorio')
+  if(!timeVal.value || !timeRegex.test(timeVal.value)) errs.value.push('Tiempo con formato "2h 07m 30s"')
+  if(!positionVal.value || positionVal.value <= 0) errs.value.push('Posición debe ser > 0')
+  if(!cityId.value) errs.value.push('Debe seleccionar ciudad')
   if(dni.value) {
     const editingId = props.modelValue?.id
     const dup = props.existingDni.filter(d => d === dni.value)
@@ -45,7 +45,7 @@ async function onSubmit() {
   if(!isValid.value) return
   saving.value = true
   try {
-    emit('submit', { dni: Number(dni.value), nombre: nombre.value, tiempo: tiempo.value, posicion: Number(posicion.value), ciudadId: Number(ciudadId.value) })
+    emit('submit', { dni: Number(dni.value), name: nameVal.value, time: timeVal.value, position: Number(positionVal.value), cityId: Number(cityId.value) })
   } finally { saving.value = false }
 }
 </script>
@@ -58,21 +58,21 @@ async function onSubmit() {
   </div>
   <div class="grid grid-cols-[160px_1fr] gap-3 items-center">
     <label>Nombre</label>
-    <input v-model.trim="nombre" type="text" required class="border rounded-lg px-3 py-2" placeholder="Nombre y apellido" />
+  <input v-model.trim="nameVal" type="text" required class="border rounded-lg px-3 py-2" placeholder="Nombre y apellido" />
   </div>
   <div class="grid grid-cols-[160px_1fr] gap-3 items-center">
     <label>Tiempo</label>
-    <input v-model.trim="tiempo" type="text" class="border rounded-lg px-3 py-2" placeholder="2h 07m 30s" />
+  <input v-model.trim="timeVal" type="text" class="border rounded-lg px-3 py-2" placeholder="2h 07m 30s" />
   </div>
   <div class="grid grid-cols-[160px_1fr] gap-3 items-center">
     <label>Posición</label>
-    <input v-model.number="posicion" type="number" min="1" class="border rounded-lg px-3 py-2" />
+  <input v-model.number="positionVal" type="number" min="1" class="border rounded-lg px-3 py-2" />
   </div>
   <div class="grid grid-cols-[160px_1fr] gap-3 items-center">
     <label>Ciudad</label>
-    <select v-model.number="ciudadId" class="border rounded-lg px-3 py-2">
+    <select v-model.number="cityId" class="border rounded-lg px-3 py-2">
       <option :value="0" disabled>Seleccione ciudad</option>
-      <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.nombre }}</option>
+      <option v-for="c in cities" :key="c.id" :value="c.id">{{ c.name }}</option>
     </select>
   </div>
   <ul v-if="errs.length" class="text-red-600 text-sm list-disc pl-5">

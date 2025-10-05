@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
-const props = defineProps<{ modelValue?: { nombre: string } | null }>()
-const emit = defineEmits<{ (e:'submit', v:{ nombre:string }): void; (e:'cancel'): void }>()
+const props = defineProps<{ modelValue?: { name: string } | null }>()
+const emit = defineEmits<{ (e:'submit', v:{ name:string }): void; (e:'cancel'): void }>()
 
-const nombre = ref(props.modelValue?.nombre ?? '')
-watchEffect(()=>{ if(props.modelValue) nombre.value = props.modelValue.nombre })
+const nameVal = ref(props.modelValue?.name ?? '')
+watchEffect(()=>{ if(props.modelValue) nameVal.value = props.modelValue.name })
 
 const saving = ref(false)
 const error = ref<string | null>(null)
 
-const valid = computed(()=> nombre.value.length>=1 && nombre.value.length <= 80)
+const valid = computed(()=> nameVal.value.length>=1 && nameVal.value.length <= 80)
 
 async function onSubmit() {
   error.value = null
   if(!valid.value) return
   saving.value = true
   try {
-    emit('submit', { nombre: nombre.value })
+    emit('submit', { name: nameVal.value })
   } catch(e:any){ error.value = e.message } finally { saving.value = false }
 }
 </script>
@@ -25,7 +25,7 @@ async function onSubmit() {
 <form @submit.prevent="onSubmit" class="space-y-3">
   <div class="grid grid-cols-[160px_1fr] gap-3 items-center">
     <label>Nombre</label>
-    <input v-model.trim="nombre" type="text" maxlength="80" required placeholder="Nombre de la ciudad"
+    <input v-model.trim="nameVal" type="text" maxlength="80" required placeholder="Nombre de la ciudad"
            class="border rounded-lg px-3 py-2"/>
   </div>
   <p v-if="error" class="text-red-600 text-sm">{{ error }}</p>

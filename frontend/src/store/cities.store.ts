@@ -21,7 +21,7 @@ export const useCitiesStore = defineStore('cities', {
         this.loading = false
       }
     },
-    async create(payload: { nombre: string }) {
+    async create(payload: { name: string }) {
       this.loading = true; this.error = null
       try {
         const { data } = await api.post<City>('/ciudades', payload)
@@ -30,7 +30,7 @@ export const useCitiesStore = defineStore('cities', {
       } catch (e: any) { this.error = e.message; throw e } 
       finally { this.loading = false }
     },
-    async update(id: number, payload: { nombre: string }) {
+    async update(id: number, payload: { name: string }) {
       this.loading = true; this.error = null
       try {
         const { data } = await api.put<City>(`/ciudades/${id}`, payload)
